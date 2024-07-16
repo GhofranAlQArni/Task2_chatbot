@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROBOT Control Panel</title>
+  <style>
+    body {
+      background-color: #41627E;
+      text-align: center;
+    }
+    img {
+      margin: auto;
+    }
+    h3 {
+      font-family: 'Lato', sans-serif;
+      margin: auto;
+      width: 400px;
+      color: white;
+      font-size: 3em;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+    }
+    .middle {
+      padding: 5%;
+      display: block;
+      text-align: center;
+      margin: auto;
+    }
+    .button {
+      border-radius: 100%;
+      background-color: #7D2252;
+      color: white;
+      border: none;
+      outline: 2px;
+      padding: 7%;
+      margin: 1%;
+      font-size: 150%;
+      transition-duration: 0.5s;
+      cursor: pointer;
+      display: inline;
+      box-shadow: 3px 3px 7px #333;
+    }
+    .button:hover {
+      background-color: #41627E;
+      color: white;
+      transform: scale(1.1);
+    }
+    .footer {
+      margin: 5%;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="hole">
+    <section>
+      <img src="https://s-m.com.sa/images/logo.png" alt="no image">
+      <h3>Robot control panel</h3>
+    </section>
+    <div class="middle">
+      <form id="chat-form">
+        <input type="text" id="prompt" name="prompt" placeholder="Enter your prompt" required>
+        <button type="submit" class="button button3">Send</button>
+      </form>
+      <div id="response" style="color: white; margin-top: 20px;"></div>
+    </div>
+    <div class="footer">
+      <p>By Ghofran AlQarni</p>
+    </div>
+  </div>
+  <script>
+    document.getElementById('chat-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var prompt = document.getElementById('prompt').value;
+      fetch('/ask', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'prompt=' + encodeURIComponent(prompt)
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('response').innerText = data.response;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html>
